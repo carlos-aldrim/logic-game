@@ -1,0 +1,1 @@
+export { GameSnake } from "./GameSnake";

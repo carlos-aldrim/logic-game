@@ -1,0 +1,1 @@
+export { GameJokenpo } from "./GameJokenpo";

@@ -1,0 +1,1 @@
+export { LoadingJokenpo } from "./LoadingJokenpo";
