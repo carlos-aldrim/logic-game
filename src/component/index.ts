@@ -15,3 +15,5 @@ export { Rock } from "./Rock";
 export { Paper } from './Paper';
 export { Scissors } from "./Scissors";
 export { LoadingJokenpo } from "./LoadingJokenpo";
+export { AudioMusic } from "./AudioMusic";
+export { WinnerPopUp } from "./WinnerPopUp";

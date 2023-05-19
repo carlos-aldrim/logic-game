@@ -10,6 +10,7 @@ import {
   EndGameButton,
   Score,
   StartGameButton,
+  WinnerPopUp,
 } from "component";
 import { useGameSnake } from "hooks/useGameSnake";
 import { ArrowBack } from "@mui/icons-material";
@@ -27,8 +28,11 @@ export const GameSnake: React.FC = () => {
     startGame,
     points,
     showConfirmation,
+    showRestart,
     onClickButtonConfirm,
     onClickButtonCancel,
+    onClickButtonHome,
+    onClickButtonRestart,
     onClickOpenPopUp,
     moveSnake,
     handleBackStep,
@@ -65,10 +69,8 @@ export const GameSnake: React.FC = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  console.log(record);
-
   return (
-    <>
+    <div>
       <div
         className={styles.gameContainer}
         role="button"
@@ -87,6 +89,12 @@ export const GameSnake: React.FC = () => {
           height={`${CANVAS_SIZE[1]}px`}
         />
         <ArrowBack className={styles.back} onClick={handleBackStep} />
+        <WinnerPopUp
+          message={"Parabéns você ganhou " + points + " ponto(s)! Jogue novamente."}
+          open={showRestart}
+          onRestart={onClickButtonRestart}
+          onHome={onClickButtonHome}
+        />
       </div>
       <div className={styles.control}>
         <StartGameButton onClick={startGame} />
@@ -102,7 +110,6 @@ export const GameSnake: React.FC = () => {
           <EndGameButton onClick={onClickOpenPopUp} />
         </div>
       </div>
-      
-    </>
+    </div>
   );
 };

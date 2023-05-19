@@ -15,9 +15,12 @@ interface SnakeGameContextData {
   checkAppleCollision: (newSnake: number[][]) => boolean;
   gameLoop: () => void;
   showConfirmation: boolean;
+  showRestart: boolean;
   onClickOpenPopUp: () => void;
   onClickButtonConfirm: () => void;
+  onClickButtonHome: () => void;
   onClickButtonCancel: () => void;
+  onClickButtonRestart: () => void;
   speed: number | null;
   currentStep: number;
   handleNextStep: () => void;

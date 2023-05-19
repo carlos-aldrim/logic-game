@@ -23,7 +23,7 @@ export const useStyles = makeStyles({
     marginLeft: "-17px",
   },
   popupContent: {
-    width: "100%",
+    width: "300px",
     height: "100%",
     display: "flex",
     justifyContent: "space-between",
@@ -31,6 +31,7 @@ export const useStyles = makeStyles({
     flexDirection: "column",
     textAlign: "center",
     "& h2": {
+      fontSize: "20px",
       marginTop: "40px",
       width: "75%",
       color: "#fff",
@@ -46,7 +47,8 @@ export const useStyles = makeStyles({
       padding: "15px 20px",
       color: "#fff",
       cursor: "pointer",
-      fontSize: "18px",
+      fontSize: "15px",
+      fontWeight: 600,
       "&:hover": {
         opacity: 0.9,
       },

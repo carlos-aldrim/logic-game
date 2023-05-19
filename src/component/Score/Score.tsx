@@ -3,7 +3,7 @@ import { useStyles } from "./Score.styles";
 
 interface ScoreProps {
   points: number;
-  record: number;
+  record?: number;
 };
 
 export const Score: React.FC<ScoreProps> = ({ points, record }) => {
@@ -12,7 +12,7 @@ export const Score: React.FC<ScoreProps> = ({ points, record }) => {
   return (
     <div className={styles.container}>
       <label className={styles.score} >{points} ponto(s)</label>
-      <label className={styles.record} >Recorde: {record}</label>
+      {record ? <label className={styles.record} >Recorde: {record}</label> : ""}
     </div>
   );
 };

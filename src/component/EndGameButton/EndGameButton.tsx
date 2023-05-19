@@ -1,6 +1,6 @@
 import React from "react";
 import { useStyles } from "./EndGameButton.styles";
-import { Pause } from "@mui/icons-material";
+import { HighlightOff } from "@mui/icons-material";
 
 interface EndGameButtonProps {
   onClick: () => void;
@@ -11,7 +11,7 @@ export const EndGameButton: React.FC<EndGameButtonProps> = ({ onClick }) => {
 
   return (
     <button className={styles.button} onClick={onClick}>
-      <Pause/>
+      <HighlightOff/>
       Encerrar
     </button>
   );

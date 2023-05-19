@@ -5,7 +5,7 @@ export const Home: React.FC = () => {
 
   return (
     <Layout>
-      <GameCards/>
+      <GameCards />
     </Layout>
   );
 };

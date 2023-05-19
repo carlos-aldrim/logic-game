@@ -6,19 +6,20 @@ interface JokenpoGameContextData {
   playerOption: Option | null;
   computerOption: Option | null;
   winner: string;
-  points: number;
   showConfirmation: boolean;
+  showRestart: boolean;
   getWinner: (playerOption: Option, computerOption: Option) => string;
   handlePlayerOption: (option: Option) => void;
   gameOption: ({ keyCode }: { keyCode: number }) => void;
   onClickOpenPopUp: () => void;
   onClickButtonConfirm: () => void;
+  onClickButtonHome: () => void;
   onClickButtonCancel: () => void;
+  onClickButtonRestart: () => void;
   startGame: boolean;
   currentStep: number;
   handleNextStep: () => void;
   handleBackStep: () => void;
-  record: number;
   setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
 };
 

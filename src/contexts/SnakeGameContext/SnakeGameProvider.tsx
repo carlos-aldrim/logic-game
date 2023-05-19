@@ -9,6 +9,7 @@ import {
   SPEED,
 } from "config/constants";
 import { useToast } from "hooks/useToast";
+import { useNavigate } from "react-router-dom";
 
 export const SnakeGameProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -18,6 +19,7 @@ export const SnakeGameProvider: React.FC<{ children: React.ReactNode }> = ({
     return currentStepSaved !== null ? parseInt(currentStepSaved) : 0;
   }, []);
 
+  const navigate = useNavigate();
   const gameContainerRef = React.useRef<HTMLDivElement | null>(null);
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
   const [snake, setSnake] = React.useState(SNAKE_START);
@@ -28,8 +30,9 @@ export const SnakeGameProvider: React.FC<{ children: React.ReactNode }> = ({
   const [gameOver, setGameOver] = React.useState(false);
   const [points, setPoints] = React.useState(0);
   const [showConfirmation, setShowConfirmation] = React.useState(false);
+  const [showRestart, setShowRestart] = React.useState(false);
   const [currentStep, setCurrentStep] = React.useState(initialCurrentStep);
-  const { handleToast } = useToast();
+  const { handleToastSnake } = useToast();
   const [record, setRecord] = React.useState<number>(
     localStorage.getItem("snakeRecord")
       ? parseInt(localStorage.getItem("snakeRecord")!)
@@ -42,7 +45,7 @@ export const SnakeGameProvider: React.FC<{ children: React.ReactNode }> = ({
       setCurrentStep(parseInt(currentStepSaved));
     }
   }, []);
-  
+
   React.useEffect(() => {
     const handleBeforeUnload = () => {
       localStorage.setItem("currentStepSnake", currentStep.toString());
@@ -56,36 +59,26 @@ export const SnakeGameProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [currentStep]);
 
   const startGame = React.useCallback(() => {
-    handleToast("Jogo iniciado. Boa sorte!");
+    handleToastSnake("Jogo iniciado. Boa sorte!");
     setSnake(SNAKE_START);
     setApple(APPLE_START);
     setDir([0, -1]);
     setSpeed(SPEED);
     setGameOver(false);
     setPoints(0);
-  }, [
-    handleToast,
-    setSnake,
-    setApple,
-    setDir,
-    setSpeed,
-    setGameOver,
-    setPoints,
-  ]);
+  }, [handleToastSnake]);
 
   const endGame = React.useCallback(() => {
+    setShowRestart(true);
     setSpeed(null);
     setGameOver(true);
-    handleToast("Parabéns, você conseguiu " + points + " ponto(s)!");
+    handleToastSnake("Parabéns, você conseguiu " + points + " ponto(s)!");
     if (points > record) {
       setRecord(points);
-      handleToast("Parabéns, novo recorde!");
+      handleToastSnake("Parabéns, novo recorde!");
       localStorage.setItem("snakeRecord", points.toString());
     }
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
-  }, [points, record, setSpeed, setGameOver, handleToast, setRecord]);
+  }, [points, record, setSpeed, setGameOver, handleToastSnake, setRecord]);
 
   const onClickOpenPopUp = React.useCallback(() => {
     setShowConfirmation(true);
@@ -173,22 +166,49 @@ export const SnakeGameProvider: React.FC<{ children: React.ReactNode }> = ({
     setSnake(snakeCopy);
   }, [snake, dir, checkCollision, endGame, checkAppleCollision]);
 
-  const onClickButtonConfirm = () => {
+  const onClickButtonConfirm = React.useCallback(() => {
     setShowConfirmation(false);
-    window.location.reload();
-  };
+    setSnake(SNAKE_START);
+    setApple(APPLE_START);
+    setDir([0, -1]);
+    setSpeed(null);
+    setGameOver(false);
+    setPoints(0);
+    navigate("/");
+  }, [navigate]);
+
+  const onClickButtonHome = React.useCallback(() => {
+    setShowRestart(false);
+    setSnake(SNAKE_START);
+    setApple(APPLE_START);
+    setDir([0, -1]);
+    setSpeed(null);
+    setGameOver(false);
+    setPoints(0);
+    navigate("/");
+  }, [navigate]);
 
   const onClickButtonCancel = React.useCallback(() => {
     setShowConfirmation(false);
     setSpeed(previousSpeed);
   }, [previousSpeed]);
 
+  const onClickButtonRestart = React.useCallback(() => {
+    setShowRestart(false);
+    setSnake(SNAKE_START);
+    setApple(APPLE_START);
+    setDir([0, -1]);
+    setSpeed(null);
+    setGameOver(false);
+    setPoints(0);
+  }, []);
+
   const handleNextStep = React.useCallback(() => {
     setCurrentStep(currentStep + 1);
   }, [currentStep]);
 
   const handleBackStep = React.useCallback(() => {
-    if(currentStep > 0) setCurrentStep(currentStep - 1);
+    if (currentStep > 0) setCurrentStep(currentStep - 1);
   }, [currentStep]);
 
   const values = React.useMemo(
@@ -205,8 +225,11 @@ export const SnakeGameProvider: React.FC<{ children: React.ReactNode }> = ({
       gameContainerRef,
       checkCollision,
       checkAppleCollision,
+      onClickButtonHome,
+      onClickButtonRestart,
       gameLoop,
       showConfirmation,
+      showRestart,
       onClickOpenPopUp,
       onClickButtonConfirm,
       onClickButtonCancel,
@@ -230,13 +253,17 @@ export const SnakeGameProvider: React.FC<{ children: React.ReactNode }> = ({
       handleNextStep,
       moveSnake,
       onClickButtonCancel,
+      onClickButtonConfirm,
+      onClickButtonHome,
+      onClickButtonRestart,
       onClickOpenPopUp,
       points,
+      record,
       showConfirmation,
+      showRestart,
       snake,
       speed,
       startGame,
-      record
     ]
   );
 

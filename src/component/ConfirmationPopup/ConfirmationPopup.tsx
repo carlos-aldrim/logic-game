@@ -1,6 +1,7 @@
 import React from "react";
 import { Drawer } from "@material-ui/core";
 import { useStyles } from "./ConfirmationPopup.styles";
+import { Check, Clear } from "@mui/icons-material";
 
 interface ConfirmationPopupProps {
   message: string;
@@ -23,8 +24,8 @@ export const ConfirmationPopup: React.FC<ConfirmationPopupProps> = ({
         <div className={styles.popupContent}>
           <h2>{message}</h2>
           <div className={styles.buttonContainer}>
-            <button className={styles.confirmButton} onClick={onConfirm}>Confirmar</button>
-            <button className={styles.cancelButton} onClick={onCancel}>Cancelar</button>
+            <button className={styles.confirmButton} onClick={onConfirm}><Check/></button>
+            <button className={styles.cancelButton} onClick={onCancel}><Clear/></button>
           </div>
         </div>
       </div>

@@ -8,7 +8,7 @@ import {
   Paper,
   Rock,
   Scissors,
-  Score,
+  WinnerPopUp,
 } from "component";
 import { useGameJokenpo } from "hooks/useJokenpoGame";
 import { Option } from "config/options";
@@ -23,14 +23,15 @@ export const GameJokenpo: React.FC = () => {
     winner,
     playerOption,
     computerOption,
-    points,
     showConfirmation,
+    onClickButtonHome,
     onClickButtonConfirm,
     onClickButtonCancel,
+    onClickButtonRestart,
     onClickOpenPopUp,
     startGame,
     handleBackStep,
-    record
+    showRestart,
   } = useGameJokenpo();
 
   React.useEffect(() => {
@@ -74,33 +75,37 @@ export const GameJokenpo: React.FC = () => {
         </RenderConditional>
       )}
       {playerOption && computerOption && (
-        <div className={styles.hands}>
-          <RenderConditional condition={playerOption === "Papel"}>
-            <Paper />
-          </RenderConditional>
-          <RenderConditional condition={playerOption === "Pedra"}>
-            <Rock />
-          </RenderConditional>
-          <RenderConditional condition={playerOption === "Tesoura"}>
-            <Scissors />
-          </RenderConditional>
-          <label className={styles.versus}>vs</label>
-          <RenderConditional condition={computerOption === "Papel"}>
-            <Paper inverted={true} />
-          </RenderConditional>
-          <RenderConditional condition={computerOption === "Pedra"}>
-            <Rock inverted={true} />
-          </RenderConditional>
-          <RenderConditional condition={computerOption === "Tesoura"}>
-            <Scissors inverted={true} />
-          </RenderConditional>
+        <div>
+          <WinnerPopUp
+            message={winner}
+            open={showRestart}
+            onRestart={onClickButtonRestart}
+            onHome={onClickButtonHome}
+          />
+          <div className={styles.hands}>
+            <RenderConditional condition={playerOption === "Papel"}>
+              <Paper />
+            </RenderConditional>
+            <RenderConditional condition={playerOption === "Pedra"}>
+              <Rock />
+            </RenderConditional>
+            <RenderConditional condition={playerOption === "Tesoura"}>
+              <Scissors />
+            </RenderConditional>
+            <label className={styles.versus}>vs</label>
+            <RenderConditional condition={computerOption === "Papel"}>
+              <Paper inverted={true} />
+            </RenderConditional>
+            <RenderConditional condition={computerOption === "Pedra"}>
+              <Rock inverted={true} />
+            </RenderConditional>
+            <RenderConditional condition={computerOption === "Tesoura"}>
+              <Scissors inverted={true} />
+            </RenderConditional>
+          </div>
         </div>
       )}
       <div className={styles.result}>
-        <h2 className={styles.winner}>{winner}</h2>
-        <div>
-          <Score points={points} record={record} />
-        </div>
         <div className={styles.endGame}>
           <ConfirmationPopup
             message="Tem certeza que deseja encerrar o jogo?"

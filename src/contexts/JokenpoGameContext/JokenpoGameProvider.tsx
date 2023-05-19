@@ -2,6 +2,7 @@ import React from "react";
 import { JokenpoGameContext } from "./JokenpoGameContext";
 import { Option, options } from "config/options";
 import { useToast } from "hooks/useToast";
+import { useNavigate } from "react-router-dom";
 
 export const JokenpoGameProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -11,22 +12,18 @@ export const JokenpoGameProvider: React.FC<{ children: React.ReactNode }> = ({
     return currentStepSaved !== null ? parseInt(currentStepSaved) : 0;
   }, []);
 
+  const navigate = useNavigate();
   const gameContainerRef = React.useRef<HTMLDivElement | null>(null);
   const [playerOption, setPlayerOption] = React.useState<Option | null>(null);
   const [computerOption, setComputerOption] = React.useState<Option | null>(
     null
   );
   const [winner, setWinner] = React.useState("");
-  const [points, setPoints] = React.useState(0);
   const [showConfirmation, setShowConfirmation] = React.useState(false);
+  const [showRestart, setShowRestart] = React.useState(false);
   const [startGame, setStartGame] = React.useState(true);
   const [currentStep, setCurrentStep] = React.useState(initialCurrentStep);
-  const { handleToast } = useToast();
-  const [record, setRecord] = React.useState<number>(
-    localStorage.getItem("snakeRecord")
-      ? parseInt(localStorage.getItem("snakeRecord")!)
-      : 0
-  );
+  const { handleToastJokenpo } = useToast();
 
   React.useEffect(() => {
     const currentStepSaved = localStorage.getItem("currentStepJokenpo");
@@ -34,14 +31,6 @@ export const JokenpoGameProvider: React.FC<{ children: React.ReactNode }> = ({
       setCurrentStep(parseInt(currentStepSaved));
     }
   }, []);
-
-  React.useEffect(() => {
-    if (points > record) {
-      setRecord(points);
-      handleToast("Parabéns, novo recorde!");
-      localStorage.setItem("snakeRecord", points.toString());
-    }
-  }, [handleToast, points, record]);
 
   React.useEffect(() => {
     const handleBeforeUnload = () => {
@@ -53,7 +42,7 @@ export const JokenpoGameProvider: React.FC<{ children: React.ReactNode }> = ({
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, [currentStep, handleToast, points, record]);
+  }, [currentStep, handleToastJokenpo]);
 
   const getWinner = React.useCallback(
     (playerOption: Option, computerOption: Option): string => {
@@ -62,18 +51,17 @@ export const JokenpoGameProvider: React.FC<{ children: React.ReactNode }> = ({
         (playerOption === Option.Paper && computerOption === Option.Rock) ||
         (playerOption === Option.Scissors && computerOption === Option.Paper)
       ) {
-        handleToast("Você ganhou, Parabéns!");
-        setPoints(points + 1);
-        return "Parabéns, você ganhou!";
+        handleToastJokenpo("Você ganhou, Parabéns!");
+        return "Parabéns, você GANHOU!";
       } else if (playerOption === computerOption) {
-        handleToast("Empate.");
-        return "Empate";
+        handleToastJokenpo("Empate! jogue novamente.");
+        return "EMPATE! jogue novamente.";
       } else {
-        handleToast("Que pena, você perdeu!");
-        return "Você perdeu!";
+        handleToastJokenpo("Você perdeu! jogue novamente.");
+        return "Que pena, você PERDEU! jogue novamente.";
       }
     },
-    [handleToast, points]
+    [handleToastJokenpo]
   );
 
   const handlePlayerOption = React.useCallback(
@@ -84,11 +72,7 @@ export const JokenpoGameProvider: React.FC<{ children: React.ReactNode }> = ({
       setPlayerOption(option);
       setComputerOption(randomOption);
       setWinner(result);
-      setTimeout(() => {
-        setPlayerOption(null);
-        setComputerOption(null);
-        setStartGame(true);
-      }, 2000);
+      setShowRestart(true);
     },
     [getWinner]
   );
@@ -108,14 +92,34 @@ export const JokenpoGameProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const onClickButtonConfirm = React.useCallback(() => {
     setShowConfirmation(false);
-    handleToast("Parabéns você conseguiu " + points + " ponto(s)!");
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
-  }, [handleToast, points]);
+    setWinner("");
+    setPlayerOption(null);
+    setComputerOption(null);
+    setStartGame(true);
+    setCurrentStep(0);
+    navigate("/");
+  }, [navigate]);
+
+  const onClickButtonHome = React.useCallback(() => {
+    setShowRestart(false);
+    setWinner("");
+    setPlayerOption(null);
+    setComputerOption(null);
+    setStartGame(true);
+    setCurrentStep(0);
+    navigate("/");
+  }, [navigate]);
 
   const onClickButtonCancel = React.useCallback(() => {
     setShowConfirmation(false);
+  }, []);
+
+  const onClickButtonRestart = React.useCallback(() => {
+    setShowRestart(false);
+    setWinner("");
+    setPlayerOption(null);
+    setComputerOption(null);
+    setStartGame(true);
   }, []);
 
   const handleNextStep = React.useCallback(() => {
@@ -126,29 +130,26 @@ export const JokenpoGameProvider: React.FC<{ children: React.ReactNode }> = ({
     if (currentStep > 0) setCurrentStep(currentStep - 1);
   }, [currentStep]);
 
-  React.useEffect(() => {
-    if (currentStep !== 1) setPoints(0);
-  }, [currentStep]);
-
   const values = React.useMemo(
     () => ({
       gameContainerRef,
       playerOption,
       computerOption,
       winner,
-      points,
       showConfirmation,
+      showRestart,
       getWinner,
       handlePlayerOption,
       gameOption,
       onClickOpenPopUp,
       onClickButtonConfirm,
+      onClickButtonHome,
       onClickButtonCancel,
+      onClickButtonRestart,
       startGame,
       currentStep,
       handleNextStep,
       handleBackStep,
-      record,
       setCurrentStep,
     }),
     [
@@ -161,10 +162,11 @@ export const JokenpoGameProvider: React.FC<{ children: React.ReactNode }> = ({
       handlePlayerOption,
       onClickButtonCancel,
       onClickButtonConfirm,
+      onClickButtonHome,
+      onClickButtonRestart,
       playerOption,
-      points,
-      record,
       showConfirmation,
+      showRestart,
       startGame,
       winner,
     ]
