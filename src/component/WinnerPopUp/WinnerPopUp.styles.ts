@@ -2,6 +2,7 @@ import { makeStyles } from "@mui/styles";
 
 export const useStyles = makeStyles({
   drawer: {
+    opacity: 0.9,
     "& .MuiDrawer-paper": {
       width: "100%",
       height: "100%",
