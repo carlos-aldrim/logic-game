@@ -6,11 +6,11 @@ export const useStyles = makeStyles({
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
     gap: 10,
-    marginTop: "70px",
+    margin: "70px 0px 20px 0px",
     position: "relative",
   },
   card: {
-    height: "280px",
+    height: "300px",
     backgroundColor: "#666",
     borderRadius: "8px",
     overflow: "hidden",

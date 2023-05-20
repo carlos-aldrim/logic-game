@@ -55,10 +55,23 @@ export const GameCards: React.FC = () => {
     },
   ];
 
+  const sortedGames = [...games].sort((a, b) => {
+    const nameA = a.name.toUpperCase();
+    const nameB = b.name.toUpperCase();
+  
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+    return 0;
+  });
+
   return (
     <div className={styles.cardContent}>
       <label className={styles.title}>Jogo(s):</label>
-      {games.map((game) => (
+      {sortedGames.map((game) => (
         <div key={game.id} className={styles.card}>
           <div className={styles.image}>
             <img src={game.img} alt={game.name} />

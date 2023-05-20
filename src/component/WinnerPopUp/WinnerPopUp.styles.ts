@@ -18,13 +18,13 @@ export const useStyles = makeStyles({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: "200px",
+    height: "240px",
     overflow: "hidden",
     marginLeft: "-17px",
   },
   popupContent: {
     width: "300px",
-    height: "200px",
+    height: "100%",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
@@ -72,7 +72,7 @@ export const useStyles = makeStyles({
     backgroundColor: "red",
   },
   winnerIcon: {
-    marginTop: "10px",
+    marginTop: "25px",
     "& svg": {
       color: "#fff",
       width: "70px",
