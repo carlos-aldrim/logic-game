@@ -1,7 +1,7 @@
 import { makeStyles } from "@mui/styles";
 
 export const useStyles = makeStyles({
-  container: {
+  mainContainer: {
     display: "flex",
     alignItems: "center",
     flexDirection: "column",
@@ -10,6 +10,14 @@ export const useStyles = makeStyles({
     "&:focus": {
       outline: "none",
     },
+    flex: "1",
+    height: "100%",
+  },
+  gameContainer: {
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column",
+    flexGrow: 1,
   },
   title: {
     fontSize: "40px",
@@ -73,6 +81,7 @@ export const useStyles = makeStyles({
     justifyContent: "center",
     flexDirection: "column",
     textAlign: "center",
+    margin: "10px 0px",
   },
   endGame: {
     marginTop: "20px",

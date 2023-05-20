@@ -70,7 +70,7 @@ export const GameSnake: React.FC = () => {
   }, []);
 
   return (
-    <div>
+    <div className={styles.mainContainer}>
       <div
         className={styles.gameContainer}
         role="button"
@@ -83,7 +83,7 @@ export const GameSnake: React.FC = () => {
           Tecla "SPACE" para iniciar e "Esc" para encerrar o jogo.
         </label>
         <canvas
-          style={{ border: "3px solid #f4f4f4", borderRadius: "8px" }}
+          style={{ border: "3px solid #f4f4f4", borderRadius: "8px", width: "90%", height: "90%", aspectRatio: "1/1" }}
           ref={canvasRef}
           width={`${CANVAS_SIZE[0]}px`}
           height={`${CANVAS_SIZE[1]}px`}
