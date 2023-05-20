@@ -150,11 +150,12 @@ export const SnakeGameProvider: React.FC<{ children: React.ReactNode }> = ({
         }
         setApple(newApple);
         setPoints(points + 1);
+        if(speed !== null) setSpeed(speed - 1);
         return true;
       }
       return false;
     },
-    [apple, createApple, checkCollision, setApple, setPoints, points]
+    [apple, createApple, checkCollision, points, speed]
   );
 
   const gameLoop = React.useCallback(() => {

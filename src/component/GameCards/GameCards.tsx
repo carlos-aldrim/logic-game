@@ -23,7 +23,7 @@ export const GameCards: React.FC = () => {
   const games = [
     {
       id: 0,
-      name: "Game Snake",
+      name: "Jogo da Cobra",
       description:
         "Game Snake: Controle a cobra faminta, devore itens para crescer, mas cuidado com os obstáculos! Uma aventura desafiadora de estratégia e reflexos rápidos.",
       img: SnakeImage,
@@ -31,7 +31,7 @@ export const GameCards: React.FC = () => {
     },
     {
       id: 1,
-      name: "Jokenpô",
+      name: "Pedra, Papel e Tesoura",
       description:
       "Pedra, Papel, Tesoura: Um jogo de decisões rápidas e estratégia. Escolha sabiamente e vença seus oponentes",
       img: JKPImage,
