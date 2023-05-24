@@ -5,14 +5,12 @@ import {
   ConfirmationPopup,
   EndGameButton,
   LoadingJokenpo,
-  Paper,
-  Rock,
-  Scissors,
   WinnerPopUp,
 } from "component";
 import { useGameJokenpo } from "hooks/useJokenpoGame";
 import { Option } from "config/options";
 import { ArrowBack } from "@mui/icons-material";
+import { Paper, Rock, Scissors } from "views/components";
 
 export const GameJokenpo: React.FC = () => {
   const styles = useStyles();

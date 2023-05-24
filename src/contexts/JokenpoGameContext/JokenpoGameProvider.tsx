@@ -1,5 +1,5 @@
 import React from "react";
-import { JokenpoGameContext } from "./JokenpoGameContext";
+import { JokenpoGameContext } from "./types";
 import { Option, options } from "config/options";
 import { useToast } from "hooks/useToast";
 import { useNavigate } from "react-router-dom";

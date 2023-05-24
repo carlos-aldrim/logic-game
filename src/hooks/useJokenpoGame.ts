@@ -1,6 +1,4 @@
 import { JokenpoGameContext } from "contexts";
 import React from "react";
 
-export const useGameJokenpo = () => {
-  return React.useContext(JokenpoGameContext);
-};
+export const useGameJokenpo = () => React.useContext(JokenpoGameContext);

@@ -1,2 +1,2 @@
-export { SnakeGameContext } from "./SnakeGameContext";
+export { SnakeGameContext } from "./types";
 export { SnakeGameProvider } from "./SnakeGameProvider";

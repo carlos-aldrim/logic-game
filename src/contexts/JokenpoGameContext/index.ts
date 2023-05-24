@@ -1,2 +1,2 @@
-export { JokenpoGameContext } from "./JokenpoGameContext";
+export { JokenpoGameContext } from "./types";
 export { JokenpoGameProvider } from "./JokenpoGameProvider";

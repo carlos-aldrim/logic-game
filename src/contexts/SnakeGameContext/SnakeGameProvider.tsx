@@ -1,5 +1,5 @@
 import React from "react";
-import { SnakeGameContext } from "./SnakeGameContext";
+import { SnakeGameContext } from "./types";
 import {
   APPLE_START,
   CANVAS_SIZE,
@@ -128,14 +128,8 @@ export const SnakeGameProvider: React.FC<{ children: React.ReactNode }> = ({
         piece[0] < 0 ||
         piece[1] * SCALE >= CANVAS_SIZE[1] ||
         piece[1] < 0
-      ) {
-        return true;
-      }
-      for (const segment of snk) {
-        if (piece[0] === segment[0] && piece[1] === segment[1]) {
-          return true;
-        }
-      }
+      ) return true;
+      for (const segment of snk) if (piece[0] === segment[0] && piece[1] === segment[1]) return true;
       return false;
     },
     [snake]
@@ -150,7 +144,7 @@ export const SnakeGameProvider: React.FC<{ children: React.ReactNode }> = ({
         }
         setApple(newApple);
         setPoints(points + 1);
-        if(speed !== null) setSpeed(speed - 1);
+        if (speed !== null) setSpeed(speed - 1);
         return true;
       }
       return false;

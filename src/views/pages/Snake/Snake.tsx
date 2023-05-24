@@ -12,10 +12,14 @@ export const Snake: React.FC = () => {
   return (
     <Layout>
       <RenderConditional condition={currentStep === 0}>
-        <OptionPlayer disabledSoloMode={false} disabledTeamMode={true} onClickSoloMode={handleNextStep} />
+        <OptionPlayer
+          disabledSoloMode={false}
+          disabledTeamMode={true}
+          onClickSoloMode={handleNextStep}
+        />
       </RenderConditional>
       <RenderConditional condition={currentStep === 1}>
-        <GameSnake/>
+        <GameSnake />
       </RenderConditional>
     </Layout>
   );
